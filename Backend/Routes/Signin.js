@@ -7,18 +7,21 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 route.post("/Sign_in", async (req, res) => {
+  console.log(req.body)
   console.log("try to send the user to the backend");
   try {
-    const accessToken = jwt.sign(req.body.password, process.env.TOKEN_SECRET);
-    const cyptedpassword = await bcrypt.hash(req.body.password, 10);
+    const accessToken = jwt.sign(req.body.password, process.env.jsonSecretkey);
+    const cryptedpassword = await bcrypt.hash(req.body.password, 10);
 
     const newuser = await user.create({
       email: req.body.email,
-      password: req.body.password,
+      password: cryptedpassword,
+      verified:false,
       JwtToken: accessToken,
     });
     return res.send({ success: true, message: "user is created successfully" });
   } catch (e) {
+    console.log(e)
     return res.send({ success: false, Message: "error" });
   }
 });
