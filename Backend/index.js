@@ -1,8 +1,15 @@
 const express =require('express')
 const app =express();
 const connectDB=require("./DB_connection/Connectdb")
+const cors=require("cors")
 require('dotenv').config();// npm i dotenv 
-
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Replace with your client's origin
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+)
 // Middleware to parse JSON bodies
 app.use(express.json());
 // Define a route for the root URL ("/")

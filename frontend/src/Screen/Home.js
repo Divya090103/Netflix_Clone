@@ -1,14 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
-const Home=()=>{
-  return(
+import Background from "../Component/Background";
+import Navbar from "../Component/Navbar";
+import Signup from "./SignUp";
+import Accordian from "../Component/Accordian";
+const Home = () => {
+  return (
     <>
-   <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>404 - Page Not Found</h1>
-      <p>Oops! The page you are looking for does not exist.</p>
-      <Link to="/">Go back to Home</Link>
-    </div>
+      <Background />
+      <div className="content">
+        <Navbar />
+        <Signup />
+      </div>
+      <Accordian/>
     </>
   );
-}
+};
 export default Home;
