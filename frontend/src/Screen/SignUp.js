@@ -22,7 +22,7 @@ const Signup = () => {
           <div>
             <input
               type="email"
-              className="p-2 text-secondary custom-input p-1 fs-3"
+              className="p-2 text-secondary custom-input p-1 fs-4"
               style={{ backgroundColor: "black" }}
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
@@ -32,21 +32,22 @@ const Signup = () => {
           </div>
           &nbsp;
           <div>
-          {mail.length === 0 ? (
-                 <button
-               className="btn bg-danger text-white p-2 fs-3"
-              onClick={() => alert("Please enter the mail")}
-  >
-    <b>Get Started</b>
-  </button>
-) : (
-  <Link
-    className="btn bg-danger text-white p-2 fs-3"
-    to="/Sign"
-    state={{ mail }}
-  >
-    <b>Get Started</b>
-  </Link>)}
+            {mail.length === 0 ? (
+              <button
+                className="btn bg-danger text-white p-2 fs-3"
+                onClick={() => alert("Please enter the mail")}
+              >
+                <b>Get Started</b>
+              </button>
+            ) : (
+              <Link
+                className="btn bg-danger text-white p-2 fs-3"
+                to="/Sign"
+                state={{ mail }}
+              >
+                <b>Get Started</b>
+              </Link>
+            )}
           </div>
         </div>
       </div>

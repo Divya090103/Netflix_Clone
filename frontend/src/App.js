@@ -9,6 +9,7 @@ import Signup2 from "./Component/Signup2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // import bootstrap js
 import "bootstrap-dark-5/dist/css/bootstrap-dark.min.css"; // Replace with your actual dark theme CSS
+import Password from "./Component/ChangePassword";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Sign_up" element={<Signup />} />
           <Route path="Log_in" element={<Login />} />
           <Route path="/Sign" element={<Signup2/>}/>
+          <Route path="/password_change" element={<Password/>}/>
           <Route element={<Error />} />
         </Routes>
       </BrowserRouter>

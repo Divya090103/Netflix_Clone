@@ -94,7 +94,7 @@ const Login = () => {
                 <center>
                   OR
                   <br />
-                  <Link to="/Sign_up" className="text-white">
+                  <Link to="/password_change" className="text-white">
                     Forgot Password?
                   </Link>
                 </center>

@@ -1,15 +1,45 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import axios from "axios";
 const Signup2 = () => {
   //get the info from link tag
   const location = useLocation();
   const { mail } = location.state || {};
-  const handleSubmit = () => {};
-  const [data, setdata] = useState({ mail: "", password: "" });
+  const [data, setdata] = useState({ email: mail, password: "" }); //name should be equal as data model
+  //submit the data to the database
+  const [state, setstate] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //Add user to the data base
+    try {
+      if (data.password.length <= 0) {
+        setstate("please enter the password");
+        return;
+      }
+
+      const response = await axios.post(
+        "http://localhost:5000/api/Sign_in",
+        data
+      );
+      console.log("Response:", response.data);
+      if (response.data.success) {
+        setdata({
+          mail: "",
+          password: "",
+        });
+        setstate("user  created");
+      } else {
+        setstate("user is already present with that mail id");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <>
       <Navbar />
+      {state && <div className="mt-3 alert alert-warning">{state}</div>}
       <div className="container d-flex justify-content-center align-items-center">
         <div className="form mb-3 mt-5 text-white p-5">
           <form onSubmit={handleSubmit}>
@@ -27,7 +57,7 @@ const Signup2 = () => {
                 aria-describedby="emailHelp"
                 placeholder="email"
                 onChange={(e) => setdata({ ...data, email: e.target.value })}
-                value={mail}
+                value={data.email}
               />
               <div id="emailHelp" className="form-text text-secondary">
                 We'll never share your email with anyone else.

@@ -10,6 +10,11 @@ route.post("/Sign_in", async (req, res) => {
   console.log(req.body)
   console.log("try to send the user to the backend");
   try {
+    //first chek if user is already present with that mail id ur not
+    const userExist = await user.findOne({ email: req.body.email });
+    if(userExist) return res.send({success:false,message:"user is already present with that mail id"});
+
+
     const accessToken = jwt.sign(req.body.password, process.env.jsonSecretkey);
     const cryptedpassword = await bcrypt.hash(req.body.password, 10);
 

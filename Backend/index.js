@@ -18,7 +18,9 @@ app.use(express.json());
 // });
 app.use("/api",require("./Routes/Signin"));// npm i express-router
 
-app.use("/api",require("./Routes/Login"));
+app.use("/api",require("./Routes/Login"));// login  route
+
+app.use("/api",require("./Routes/update")) //change the password of presnt user
 
 // Start the server and listen on the specified port
 app.listen(process.env.PORT, () => {
