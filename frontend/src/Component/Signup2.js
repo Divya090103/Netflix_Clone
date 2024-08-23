@@ -28,7 +28,7 @@ const Signup2 = () => {
           mail: "",
           password: "",
         });
-        setstate("user  created");
+        setstate("Please verify the mail that sent to your mail id");
       } else {
         setstate("user is already present with that mail id");
       }

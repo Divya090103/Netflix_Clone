@@ -22,6 +22,8 @@ app.use("/api",require("./Routes/Login"));// login  route
 
 app.use("/api",require("./Routes/update")) //change the password of presnt user
 
+app.use("/api",require("./Routes/Verified"));
+
 // Start the server and listen on the specified port
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on http://localhost:`);

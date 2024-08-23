@@ -14,7 +14,12 @@ const Password = () => {
     e.preventDefault();
     console.log(data.email);
     console.log(data.password);
-    if (data.password === data.confirmPassword) {
+
+    if(data.password.length==0){
+      setstate("Please enter the new password");
+      return ;
+    }
+    if (data.password.length>0&&data.password === data.confirmPassword) {
       //add to change the pass ward from tne backend
       try {
         const send = await axios.post(
@@ -30,7 +35,8 @@ const Password = () => {
             password: "",
             confirmPassword: "",
           });
-        } else {
+        } 
+        else {
           setstate("user is not present with that mail id");
         }
       } catch (e) {

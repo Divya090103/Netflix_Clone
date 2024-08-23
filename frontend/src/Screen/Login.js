@@ -5,8 +5,7 @@ import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [verify, setverify] = useState(false); //useer is verified or not
-  const [present, setpresent] = useState(false); //user is present or not
+  const [state, setState] = useState("");
 
   const [data, setdata] = useState({ email: "", password: "" });
 
@@ -16,28 +15,34 @@ const Login = () => {
     console.log("form is going to submit");
     console.log(data.email);
     console.log(data.password);
-    const fetchdat = await fetch("http://localhost:5000/api/Login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: data.email,
-        password: data.password,
-      }),
-    });
-    console.log(typeof fetchdat);
-    const response = await fetchdat.json();
-    if (response.success) {
-      if (response.user.verified) {
-        localStorage.setItem("user", response.user);
-        localStorage.setItem("authorize", response.user.JwtToken);
-        navigate("/");
+    try {
+      const fetchdat = await fetch("http://localhost:5000/api/Login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      const response = await fetchdat.json();
+      console.log(response);
+      if (response.success) {
+        if (response.user.verified) {
+          console.log(response.user);
+          localStorage.setItem("user", JSON.stringify(response.user));
+          localStorage.setItem("authorize", response.user.JwtToken);
+          navigate("/logged");
+        } else {
+          setState("user is not verified yet");
+        }
       } else {
-        setverify(true);
+        setState("Incorrect password");
       }
-    } else {
-      alert("user is not present with that mail id");
+    } catch (e) {
+      console.log(e);
     }
   };
   return (
@@ -52,7 +57,7 @@ const Login = () => {
           </h1>
           <div className="container d-flex justify-content-center align-items-center">
             <div className="form s2 text-white p-5">
-              <form onSubmit={handleSubmit} >
+              <form onSubmit={handleSubmit}>
                 <h3>
                   <b>Sign in</b>
                 </h3>
@@ -109,42 +114,7 @@ const Login = () => {
           </div>
         </header>
       </div>
-      {verify ? (
-        <>
-          <>
-            <div className="modal show d-block" tabIndex="-1">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                      onClick={() => setverify(false)} // Option to close the modal and reset cart state
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <p>Please verify ur mail id</p>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                      onClick={() => setverify(false)} // Close the modal
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        </>
-      ) : (
-        ""
-      )}
+      {state && <div className="mt-3 alert alert-warning">{state}</div>}
     </>
   );
 };
